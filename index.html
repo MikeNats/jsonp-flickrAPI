@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+	<ul id="data"></ul>
+    
+	<script>
+		var MyFeed = function(){}
+		var f = new MyFeed();
+		MyFeed.prototype.setFeedUrl = function(url)
+		{
+			this.feedUrl = url;
+			return this;
+		}
+		MyFeed.prototype.getFeed = function(data)
+		{
+
+  /********* Implementation *********/
+			var url=this.feedUrl//;.replace('{callback}','callback');//(1)
+			var head_element = document.getElementsByTagName("head")[0];//(2)
+            var newScript = document.createElement('script');
+            newScript.type = 'text/javascript';
+            newScript.src = url;
+            head_element.appendChild(newScript);
+			
+		}
+		function jsonFlickrFeed (data) {//(3)
+            var output="";
+	        for (var i = 0; i < data.items.length; i++) {//Accessing Array Elements    
+			    output += '<li><img src="'+ data.items[i]["media"]["m"]+'" />'+ data.items[i]["title"]+'</li>';	//popopulate's UL with data			     
+             }
+		   var update = document.getElementById('data');
+           update.innerHTML = output;
+        }
+   /********* End  *********/
+	f.setFeedUrl("http://api.flickr.com/services/feeds/photos_public.gne?tags=london&tagmode=any&format=json").getFeed();
+	</script>
+</body>
+</html>
